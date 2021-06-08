@@ -3,6 +3,7 @@ import xhr from "./xhr";
 import { bulidURL } from './helpers/url';
 
 function axios(config: AxiosRequestConfig):void {
+    processConfig(config);
     xhr(config);
 }
 
