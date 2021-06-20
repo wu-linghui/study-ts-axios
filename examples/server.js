@@ -40,7 +40,7 @@ router.get('/base/get', function(req, res) {
 })
 
 router.post('/base/post', function(req, res) {
-    console.log(req)
+    // console.log(req)
     res.json(req.body)
 })
 
