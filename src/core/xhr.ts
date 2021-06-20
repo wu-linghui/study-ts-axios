@@ -1,7 +1,7 @@
-import { createError } from './helpers/eroor'
-import { handleResponseFail } from './helpers/fail'
-import { parseHeaders } from './helpers/headers'
-import { AxiosPromise, AxiosRequestConfig, AxiosResponse } from './types'
+import { createError } from '../helpers/eroor'
+import { handleResponseFail } from '../helpers/fail'
+import { parseHeaders } from '../helpers/headers'
+import { AxiosPromise, AxiosRequestConfig, AxiosResponse } from '../types'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     return new Promise((resolve, reject) => {

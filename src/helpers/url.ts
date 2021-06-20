@@ -1,6 +1,6 @@
-import { isDate, isObject, isPlainObject } from './util';
+import { isDate, isObject, isPlainObject } from './util'
 
-function encode (val: string): string {
+function encode(val: string): string {
     return encodeURIComponent(val)
         .replace(/%40/g, '@')
         .replace(/%3A/gi, ':')
@@ -11,45 +11,45 @@ function encode (val: string): string {
         .replace(/%5D/gi, ']')
 }
 
-export function bulidURL (url: string, params?: any) {
+export function bulidURL(url: string, params?: any) {
     if (!params) {
-        return url;
+        return url
     }
 
-    const parts: string[] = [];
+    const parts: string[] = []
 
-    Object.keys(params).forEach((key) => {
-        let val = params[key];
+    Object.keys(params).forEach(key => {
+        let val = params[key]
         if (val === null || typeof val === 'undefined') {
-        return;
+            return
         }
-        let values: string[];
+        let values: string[]
         if (Array.isArray(val)) {
-        values = val;
-        key += '[]';
+            values = val
+            key += '[]'
         } else {
-        values = [val];
+            values = [val]
         }
-        values.forEach((val) => {
-        if (isDate(val)) {
-            val = val.toISOString();
-        } else if (isPlainObject(val)) {
-            val = JSON.stringify(val);
-        }
-        parts.push(`${encode(key)}=${encode(val)}`);
+        values.forEach(val => {
+            if (isDate(val)) {
+                val = val.toISOString()
+            } else if (isPlainObject(val)) {
+                val = JSON.stringify(val)
+            }
+            parts.push(`${encode(key)}=${encode(val)}`)
         })
     })
 
-    let serializedParams = parts.join('&');
+    let serializedParams = parts.join('&')
 
     if (serializedParams) {
-        const markIndex = url.indexOf('#');
+        const markIndex = url.indexOf('#')
         if (markIndex !== -1) {
-        url = url.slice(0, markIndex);
+            url = url.slice(0, markIndex)
         }
 
-        url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
+        url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams
     }
 
-    return url;
+    return url
 }
