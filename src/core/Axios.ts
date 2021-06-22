@@ -30,7 +30,11 @@ export default class Axios {
         return this._requestMethodWithoutData('options', url, config)
     }
 
-    _requestMethodWithoutData(method: Method, url: string, config?: AxiosRequestConfig) {
+    _requestMethodWithoutData(
+        method: Method,
+        url: string,
+        config?: AxiosRequestConfig
+    ): AxiosPromise {
         return this.request(
             Object.assign(config || {}, {
                 method,
