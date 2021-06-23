@@ -31,7 +31,7 @@ export function createError(
     code?: string | null | undefined,
     request?: any,
     response?: AxiosResponse
-) {
+): AxiosError {
     const error = new AxiosError(message, config, code, request, response)
     return error
 }

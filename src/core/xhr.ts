@@ -36,7 +36,8 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
                 config,
                 request
             }
-            handleResponseFail(response)
+            // handleResponseFail(response)
+            handleResponse(response)
         }
 
         request.onerror = function handelError() {
@@ -48,6 +49,23 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
                 createError(`Timeout of ${timeout} ms exceeded`, config, 'ECONNABORTED', request)
             )
         }
+
+        function handleResponse(response: AxiosResponse) {
+            if (response.status >= 200 && response.status < 300) {
+                resolve(response)
+            } else {
+                reject(
+                    createError(
+                        `Request failed with status code ${response.status}`,
+                        config,
+                        null,
+                        request,
+                        response
+                    )
+                )
+            }
+        }
+
         Object.keys(headers).forEach(name => {
             if (data === null && name.toLowerCase() === 'content-type') {
                 delete headers[name]

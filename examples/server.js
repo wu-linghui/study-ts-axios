@@ -1,5 +1,5 @@
 const express = require('express')
-// const bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
 const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
@@ -20,8 +20,11 @@ app.use(webpackHotMiddleware(compiler))
 
 app.use(express.static(__dirname))
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+// app.use(express.json())
+// app.use(express.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+// app.use(bodyParser.text())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 const port = process.env.PORT || 8081
 module.exports = app.listen(port, () => {
@@ -31,7 +34,7 @@ module.exports = app.listen(port, () => {
 
 
 registerExtendRouter();
-
+registerInterceptorRouter();
 
 app.use(router);
 
@@ -123,5 +126,11 @@ function registerExtendRouter () {
                 age: 18
             }
         })
+    })
+}
+
+function registerInterceptorRouter () {
+    router.get('/interceptor/get', function(req, res) {
+        res.end('hello')
     })
 }

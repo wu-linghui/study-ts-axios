@@ -1,4 +1,4 @@
-import axios, { AxiosPromise } from '../../src/index';
+import axios from '../../src/index';
 
 
 // axios({
@@ -52,7 +52,9 @@ interface User {
 
 function getUser<T>() {
     return axios<ResponseData<T>>('/extend/user')
-        .then(res => res)
+        .then(res => {
+            console.log(res);
+        })
         .catch(err => console.error(err))
 }
 
@@ -63,3 +65,5 @@ async function test2() {
 }
 
 test2();
+// getUser<User>();
+// console.log(axios)
