@@ -22,6 +22,8 @@ export interface AxiosRequestConfig {
     headers?: any
     responseType?: XMLHttpRequestResponseType
     timeout?: number
+    transformRequest?: AxiosTranformer | AxiosTranformer[]
+    transformResponse?: AxiosTranformer | AxiosTranformer[]
 
     [propName: string]: any
 }
@@ -33,6 +35,7 @@ export interface AxiosResponse<T = any> {
     headers: any
     config: AxiosRequestConfig
     request: any
+    transformResponse?: AxiosTranformer | AxiosTranformer[]
 }
 
 export interface AxiosPromise<T = any> extends Promise<AxiosResponse<T>> {}
@@ -81,4 +84,12 @@ export interface ResolvedFn<T> {
 
 export interface RejectedFn {
     (error: any): any
+}
+
+export interface AxiosTranformer {
+    (data: any, headers?: any): any
+}
+
+export interface AxiosStatic extends AxiosInstance {
+    create(config?: AxiosRequestConfig): AxiosInstance
 }
