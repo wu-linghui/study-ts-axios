@@ -4,34 +4,34 @@ import qs from 'qs'
 axios.defaults.headers.common['test2'] = 123
 
 axios({
-  url: '/config/post',
-  method: 'post',
-  data: qs.stringify({
-    a: 1
-  }),
-  headers: {
-    test: '321'
-  }
+    url: '/config/post',
+    method: 'post',
+    data: qs.stringify({
+        a: 1
+    }),
+    headers: {
+        test: '321'
+    }
 }).then((res) => {
-  console.log(res.data)
+    console.log(res.data)
 })
 
 
 axios({
-  transformRequest: [(function(data) {
-    return qs.stringify(data)
-  }), ...(axios.defaults.transformRequest as AxiosTranformer[])],
-  transformResponse: [...(axios.defaults.transformResponse as AxiosTranformer[]), function(data) {
-    if (typeof data === 'object') {
-      data.b = 2
+    transformRequest: [(function(data) {
+        return qs.stringify(data)
+    }), ...(axios.defaults.transformRequest as AxiosTranformer[])],
+    transformResponse: [...(axios.defaults.transformResponse as AxiosTranformer[]), function(data) {
+        if (typeof data === 'object') {
+            data.b = 2
+        }
+        return data
+    }],
+    url: '/config/post',
+    method: 'post',
+    data: {
+        a: 1
     }
-    return data
-  }],
-  url: '/config/post',
-  method: 'post',
-  data: {
-    a: 1
-  }
 }).then((res) => {
     console.log(res.data)
 })
@@ -39,21 +39,21 @@ axios({
 
 const instance = axios.create({
     transformRequest: [(function(data) {
-      return qs.stringify(data)
+        return qs.stringify(data);
     }), ...(axios.defaults.transformRequest as AxiosTranformer[])],
     transformResponse: [...(axios.defaults.transformResponse as AxiosTranformer[]), function(data) {
-      if (typeof data === 'object') {
-        data.b = 'create'
-      }
-      return data
+        if (typeof data === 'object') {
+            data.b = 'create'
+        }
+        return data;
     }],
 });
 instance({
     url: '/config/post',
     method: 'post',
     data: {
-      a: 1
+        a: 1
     }
-  }).then((res) => {
-      console.log(res.data)
-  })
+}).then((res) => {
+    console.log(res.data)
+})
